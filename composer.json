@@ -1,34 +1,28 @@
 {
-    "name": "luanjinlong/youzan",
+    "name": "luanjinlong/youzan-laravel",
     "description": "'youzan for laravel'",
-    "type": "library",
     "license": "MIT",
-     "keywords": [
-        "youzan",
-        "youzanyun",
-        "youzan-laravel"
-    ],
     "authors": [
         {
             "name": "xiaolong",
             "email": "646448149@qq.com"
         }
     ],
-  "autoload": {
-    "psr-4": {
-      "Long\\Youzan\\": "src/"
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Long\\Youzan\\": "src/"
+        }
+    },
+    "require": {
+        "ext-curl": "*"
+    },
+    "extra": {
+        "laravel": {
+            "aliases": {
+                "Youzan": "Long\\Youzan\\Youzan"
+            },
+            "providers": ["Long\\Youzan\\YouzanProvider"]
+        }
     }
-  },
-  "require": {
-    "ext-curl": "*"
-  },
-  "minimum-stability": "stable",
-  "extra": {
-    "laravel": {
-      "aliases": {
-        "Youzan": "Long\\Youzan\\Youzan"
-      },
-      "providers": ["Long\\Youzan\\YouzanProvider"]
-    }
-  }
 }
