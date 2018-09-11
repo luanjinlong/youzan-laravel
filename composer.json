@@ -14,14 +14,15 @@
             "email": "646448149@qq.com"
         }
     ],
-  "require": {
-    "long/youzan": "dev-master"
-  },
   "autoload": {
     "psr-4": {
       "Long\\Youzan\\": "src/"
     }
   },
+  "require": {
+    "ext-curl": "*"
+  },
+  "minimum-stability": "stable",
   "extra": {
     "laravel": {
       "aliases": {
