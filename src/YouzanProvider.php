@@ -36,6 +36,6 @@ class YouzanProvider extends ServiceProvider
      */
     public function provides()
     {
-        return [Manager::class, 'youzan'];
+        return [Client::class, 'youzan'];
     }
 }
