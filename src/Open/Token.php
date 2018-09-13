@@ -12,6 +12,7 @@ class Token
     private static $requestUrl = 'https://open.youzan.com/oauth/token';
 
 
+    const TOKEN = 'YOUZAN_ACCESS_TOKEN';
     /**
      * @var \Psr\SimpleCache\CacheInterface
      */
@@ -30,10 +31,9 @@ class Token
      *
      * @return mixed
      */
-    public function getToken($type='self', $keys = array())
+    public function getToken($type = 'self', $keys = array())
     {
-        $key = 'youzan-access-token';
-        $cached = $this->getCache()->get($key);
+        $cached = $this->getCache()->get(self::TOKEN);
         if ($cached) {
             return $cached;
         }
@@ -60,13 +60,21 @@ class Token
             $params['kdt_id'] = $config['kdt_id'];
         }
 
-        $result =  $this->parseResponse(
+        $result = $this->parseResponse(
             Http::post(self::$requestUrl, $params)
         );
-
-        $this->getCache()->set($key, $result['token'], $result['expires_in'] - 1000);
-
-        return $result['token'];
+        // token 获取失败则抛出错误
+        if (isset($result['error_description'])){
+            throw new Exception('access_token get fail:'.$result['error_description']);
+        }
+        /**
+         * 成功则返回的参数
+         * "access_token"
+         * "expires_in"
+         * "scope"
+         */
+        $this->getCache()->set(self::TOKEN, $result['access_token'], $result['expires_in'] - 1000);
+        return $result['access_token'];
     }
 
     private function parseResponse($responseData)

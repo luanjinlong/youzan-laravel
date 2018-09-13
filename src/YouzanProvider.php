@@ -6,7 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use Long\Youzan\Open\Client;
 
 /**
- * Class YouzanServiceProvider
+ * Class YouzanProvider
+ * @package Long\Youzan
  */
 class YouzanProvider extends ServiceProvider
 {
@@ -22,12 +23,14 @@ class YouzanProvider extends ServiceProvider
         ], 'config');
     }
 
+    
     public function register()
     {
         $this->app->singleton(Client::class, function () {
             return new Client();
         });
 
+        // Client 配置别名 
         $this->app->alias(Client::class, 'youzan');
     }
 
@@ -36,6 +39,6 @@ class YouzanProvider extends ServiceProvider
      */
     public function provides()
     {
-        return [Manager::class, 'youzan'];
+        return [Client::class, 'youzan'];
     }
 }

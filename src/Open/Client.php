@@ -3,14 +3,19 @@
 namespace Long\Youzan\Open;
 
 use Exception;
+use Long\Youzan\RequestMethod\Common;
 
+/**
+ * Class Client
+ * @package Long\Youzan\Open
+ */
 class Client
 {
     private static $requestUrl = 'https://open.youzan.com/api/oauthentry/';
+
     private $accessToken;
 
-
-    protected function getAccessToken()
+    public function getAccessToken()
     {
         return $this->accessToken ?: $this->accessToken = app(Token::class)->getToken();
     }
@@ -22,34 +27,48 @@ class Client
         if ('' == $this->accessToken) throw new Exception('access_token不能为空');
     }
 
-    public function get($method, $apiVersion, $params = array())
+    public function get($method, $params = array())
     {
         return $this->parseResponse(
-            Http::get($this->url($method, $apiVersion), $this->buildRequestParams($method, $params))
+            Http::get($this->url($method), $this->buildRequestParams($method, $params))
         );
     }
 
-    public function post($method, $apiVersion, $params = array(), $files = array())
+    public function post($method, $params = array(), $files = array())
     {
         return $this->parseResponse(
-            Http::post($this->url($method, $apiVersion), $this->buildRequestParams($method, $params), $files)
+            Http::post($this->url($method), $this->buildRequestParams($method, $params), $files)
         );
     }
 
-    public function url($method, $apiVersion)
+    /**
+     * 获取请求的 url
+     * 最终值类的形式似于  "https://open.youzan.com/api/oauthentry/youzan.users.weixin.followers.info/3.0.0/search"
+     * @param $method
+     * @return string
+     */
+    public function url($method)
     {
-        $method_array = explode(".", $method);
-        $method = '/' . $apiVersion . '/' . $method_array[count($method_array) - 1];
-        array_pop($method_array);
-        $method = implode(".", $method_array) . $method;
-        $url = self::$requestUrl . $method;
-        return $url;
+      
+        $segments = explode('.', $method);
+
+        // $segments是去掉最后一个参数后剩余的值   $last 是最后一个参数的值
+        $last = array_pop($segments);
+
+        return self::$requestUrl . implode('.', $segments) . \sprintf('/%s/%s', Common::API_VERSION, $last);
     }
 
     private function parseResponse($responseData)
     {
         $data = json_decode($responseData, true);
         if (null === $data) throw new Exception('response invalid, data: ' . $responseData);
+        /**
+         * error_response: {
+        code: 141500101,
+        message: "每页条数（page_size）必须在 1-50 区间内"
+        }
+         */
+//        if (isset($data['error_response']))
         return $data;
     }
 

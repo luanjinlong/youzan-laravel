@@ -8,8 +8,7 @@ use Long\Youzan\Open\Client;
 
 /**
  * Class Youzan
- *
- * @author overtrue <i@overtrue.me>
+ * @package Long\Youzan
  */
 class Youzan extends Facade
 {

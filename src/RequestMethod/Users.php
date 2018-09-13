@@ -12,7 +12,6 @@ use Long\Youzan\Open\Client;
  */
 class Users
 {
-    const API_VERSION = '3.0.0';
     // 客户管理
     // 用户API
     // 根据关注时间段批量查询微信粉丝用户信息
@@ -51,6 +50,8 @@ class Users
             return $client;
         }
         return $client = app(Client::class);
+        // 两者皆可
+//        return $client = app('youzan');
     }
 
 
@@ -68,8 +69,7 @@ class Users
             'page_size' => $page_size,
             'end_follow' => $end_follow,
         ];
-
-        return $this->getClient()->post(self::USERS_WEIXIN_FOLLOWER_SEARCH, self::API_VERSION,$my_params);
+        return $this->getClient()->post(self::USERS_WEIXIN_FOLLOWER_SEARCH, $my_params);
     }
 
 

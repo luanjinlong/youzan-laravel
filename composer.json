@@ -1,12 +1,16 @@
 {
-    "name": "luanjinlong/youzan-laravel",
+    "name": "luanjinlong/youzan",
     "description": "'youzan for laravel'",
     "license": "MIT",
     "authors": [
         {
-            "name": "xiaolong",
+            "name": "luanjinlong",
             "email": "646448149@qq.com"
         }
+    ],
+    "keywords": [
+        "youzan",
+        "youzan-laravel"
     ],
     "minimum-stability": "dev",
     "autoload": {
@@ -15,7 +19,8 @@
         }
     },
     "require": {
-        "ext-curl": "*"
+        "ext-curl": "*",
+        "symfony/cache": "^4.1"
     },
     "extra": {
         "laravel": {

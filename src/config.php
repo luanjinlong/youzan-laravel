@@ -1,9 +1,14 @@
 <?php
 
+/**
+ * 有赞配置文件
+ */
 return [
-//    $client = new Client('0a24a9a466a98d98a2', 'eeb65cce4e1adf251306d44ad232d5ed', '40050399');
+    'clientId' => env('YOUZAN_CLIENT_ID', 'e004da3d5081c400a'),
+    'clientSecret' => env('YOUZAN_CLIENT_SECRET_ID', '20a31b2ca029bba5c0567f69024dec27'),
 
-'clientId' => env('YOUZAN_CLIENT_ID',1),
-'clientSecret' => env('YOUZAN_CLIENT_SECRET_ID',1),
-'kdt_id' => env('YOUZAN_KDT_ID',1),
+    // 店铺授权 ID 就是  kdt_id
+    'kdt_id' => env('YOUZAN_KDT_ID', '41066787'),
 ];
+
+
