@@ -27,7 +27,7 @@
             "aliases": {
                 "Youzan": "Long\\Youzan\\Youzan"
             },
-            "providers": ["Long\\Youzan\\YouzanProvider"]
+            "providers": "Long\\Youzan\\YouzanProvider"
         }
     }
 }
